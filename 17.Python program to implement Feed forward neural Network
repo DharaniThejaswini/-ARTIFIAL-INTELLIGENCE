@@ -1,0 +1,18 @@
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+
+# Generate dummy data
+x_train = np.random.rand(1000, 2)
+y_train = np.random.rand(1000, 1)
+
+# Create the model
+model = Sequential()
+model.add(Dense(64, input_dim=2, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Train the model
+model.fit(x_train, y_train, epochs=10, batch_size=32)
