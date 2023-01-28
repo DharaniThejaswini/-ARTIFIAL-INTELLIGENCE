@@ -1,0 +1,22 @@
+def tower_of_blocks(n, blocks, height):
+    def backtrack(current_height, block_index, block_count):
+        if current_height == height:
+            solutions.append(block_count[:])
+            return
+        if current_height > height or block_index == n:
+            return
+        for i in range(block_index, n):
+            block_count[i] += 1
+            backtrack(current_height + blocks[i], i, block_count)
+            block_count[i] -= 1
+
+    solutions = []
+    block_count = [0] * n
+    backtrack(0, 0, block_count)
+    return solutions
+
+# Example usage
+n = 4 # number of different block colors
+blocks = [1, 2, 3, 4] # height of each block color
+height = 5 # target height of the tower
+print(tower_of_blocks(n, blocks, height))
