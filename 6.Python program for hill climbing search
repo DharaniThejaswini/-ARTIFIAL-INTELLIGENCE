@@ -1,0 +1,10 @@
+def hill_climbing(problem):
+    current = problem.initial()
+    while True:
+        neighbors = problem.neighbors(current)
+        if not neighbors:
+            return current
+        next_state = max(neighbors, key=problem.value)
+        if problem.value(next_state) <= problem.value(current):
+            return current
+        current = next_state
