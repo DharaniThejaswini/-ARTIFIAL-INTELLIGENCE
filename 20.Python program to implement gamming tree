@@ -1,0 +1,48 @@
+class GameTreeNode:
+    def _init_(self, move, state, parent=None):
+        self.move = move  # move that led to this state
+        self.state = state  # current game state
+        self.parent = parent  # parent node in the game tree
+        self.children = []  # list of child nodes in the game tree
+
+    def add_child(self, move, state):
+        child = GameTreeNode(move, state, self)
+        self.children.append(child)
+        return child
+
+def minimax(node, depth, maximizing_player):
+    if depth == 0 or node.state.is_game_over():
+        return node.state.evaluate()
+
+    if maximizing_player:
+        max_eval = float("-inf")
+        for child in node.children:
+            eval = minimax(child, depth - 1, False)
+            max_eval = max(max_eval, eval)
+        return max_eval
+    else:
+        min_eval = float("inf")
+        for child in node.children:
+            eval = minimax(child, depth - 1, True)
+            min_eval = min(min_eval, eval)
+        return min_eval
+
+def find_best_move(state, depth):
+    root = GameTreeNode(None, state)
+    for move in state.possible_moves():
+        child_state = state.make_move(move)
+        root.add_child(move, child_state)
+
+    best_move = None
+    max_eval = float("-inf")
+    for child in root.children:
+        eval = minimax(child, depth - 1, False)
+        if eval > max_eval:
+            max_eval = eval
+            best_move = child.move
+    return best_move
+
+# Example usage
+initial_state = GameState()
+best_move = find_best_move(initial_state, 3)
+print(best_move)
