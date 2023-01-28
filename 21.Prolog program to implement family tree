@@ -1,0 +1,11 @@
+% Define parent-child relationships
+parent(john, jim).
+parent(jim, jake).
+parent(jake, jimmy).
+
+% Define a recursive rule to find ancestors
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
+
+% Test the ancestor rule
+?- ancestor(john, jimmy).
