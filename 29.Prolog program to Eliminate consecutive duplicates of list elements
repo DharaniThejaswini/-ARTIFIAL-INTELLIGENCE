@@ -1,0 +1,7 @@
+compress([], []).
+compress([X], [X]).
+compress([X, X|Tail], NewList) :-
+    compress([X|Tail], NewList).
+compress([X, Y|Tail], [X|NewList]) :-
+    X \= Y,
+    compress([Y|Tail], NewList).
