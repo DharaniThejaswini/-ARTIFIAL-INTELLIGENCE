@@ -1,0 +1,6 @@
+patient(john, male, 45, hypertension).
+patient(susan, female, 32, diabetes).
+patient(mike, male, 54, heart_disease).
+
+find_patient(Name, Gender, Age, Condition) :-
+    patient(Name, Gender, Age, Condition).
