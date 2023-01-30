@@ -1,0 +1,24 @@
+% Define a list of actions available to the agent
+action(go_left).
+action(go_right).
+action(pick_up).
+action(put_down).
+
+% Define the state of the world
+state(at_left, has_nothing).
+
+% Define a rule to update the state after executing an action
+execute(go_left, at_left, S1) :- S1 = at_right.
+execute(go_right, at_right, S1) :- S1 = at_left.
+execute(pick_up, at_right, S1) :- S1 = has_object.
+execute(put_down, has_object, S1) :- S1 = has_nothing.
+
+% Define a rule to check if a goal state has been reached
+achieved(has_object).
+
+% Define a rule for the agent's decision-making process
+decide(State, Goal, Action) :- 
+    action(Action), 
+    execute(Action, State, NewState), 
+    \+achieved(NewState), 
+    decide(NewState, Goal, _).
